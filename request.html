@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rate my server | John Gay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16140f;
+    --card:#1f1c15;
+    --ink:#f3ecdc;
+    --dim:#a89f8a;
+    --accent:#ffb02e;
+    --red:#e5483b;
+    --line:#3a352a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:'Bricolage Grotesque',system-ui,sans-serif;line-height:1.5;
+  }
+  a{color:inherit}
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px}
+
+  .top{border-bottom:2px solid var(--line)}
+  .top .wrap{max-width:1020px;display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px}
+  .logo{font-weight:800;font-size:22px;text-decoration:none;letter-spacing:-.5px}
+  .logo span{color:var(--accent)}
+  .top a.back{color:var(--dim);font-size:15px;text-decoration:none}
+  .top a.back:hover{color:var(--ink)}
+
+  h1{font-size:clamp(34px,7vw,52px);font-weight:800;letter-spacing:-1.5px;line-height:1.05;margin-top:44px}
+  .note{font-family:'Caveat',cursive;font-size:25px;color:var(--accent);display:inline-block;transform:rotate(-2deg);margin:8px 0 22px}
+  .intro{color:var(--dim);margin-bottom:28px}
+
+  form{
+    background:var(--card);border:2px solid var(--line);border-radius:10px;
+    padding:26px 24px;margin-bottom:50px;
+  }
+  label{display:block;font-weight:600;font-size:15px;margin:18px 0 6px}
+  label:first-of-type{margin-top:0}
+  label span{color:var(--dim);font-weight:400;font-size:13px;margin-left:4px}
+  input[type=text], select, textarea{
+    width:100%;background:#12100b;color:var(--ink);
+    border:2px solid var(--line);border-radius:6px;
+    padding:10px 12px;font:inherit;font-size:16px;
+  }
+  textarea{min-height:110px;resize:vertical}
+  input:focus, select:focus, textarea:focus{outline:none;border-color:var(--accent)}
+  .hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+
+  button{
+    margin-top:24px;width:100%;padding:13px;font:inherit;font-weight:800;font-size:18px;
+    background:var(--accent);color:#1a1405;cursor:pointer;
+    border:2px solid #000;border-radius:6px;box-shadow:4px 4px 0 #000;
+    transition:transform .08s, box-shadow .08s;
+  }
+  button:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
+  button:disabled{opacity:.6;cursor:wait}
+
+  #status{margin-top:16px;font-size:15px;min-height:22px}
+  #status.ok{color:#8fd98f}
+  #status.bad{color:#ff8a7d}
+
+  footer{border-top:2px solid var(--line);padding:24px 0;color:var(--dim);font-size:14px;text-align:center}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="./">john<span>gay</span></a>
+    <a class="back" href="./">&larr; back to the main page</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Want me to rate your FiveM server?</h1>
+  <span class="note">fill this out, i'll check it out</span>
+  <p class="intro">Tell me a bit about your server and I'll take a look. I can't promise I'll get to every single one, and I'll be honest in the rating.</p>
+
+  <form id="f" autocomplete="off">
+    <label for="who">Your Discord name</label>
+    <input type="text" id="who" maxlength="60" required placeholder="like johngay123">
+
+    <label for="sname">Server name</label>
+    <input type="text" id="sname" maxlength="80" required>
+
+    <label for="join">How do I join? <span>cfx.re link, IP, or Discord invite</span></label>
+    <input type="text" id="join" maxlength="200" required placeholder="cfx.re/join/xxxxx">
+
+    <label for="type">What kind of server is it?</label>
+    <select id="type">
+      <option>Roleplay (serious)</option>
+      <option>Roleplay (semi / casual)</option>
+      <option>Freeroam</option>
+      <option>Racing / cars</option>
+      <option>Cops and robbers</option>
+      <option>Something else</option>
+    </select>
+
+    <label for="age">How long has it been open?</label>
+    <input type="text" id="age" maxlength="60" placeholder="2 weeks, 1 year, etc.">
+
+    <label for="why">What should I look at? <span>what makes your server different</span></label>
+    <textarea id="why" maxlength="900" required></textarea>
+
+    <div class="hp"><label>Leave this empty<input type="text" id="site" tabindex="-1"></label></div>
+
+    <button type="submit" id="go">Send it</button>
+    <div id="status"></div>
+  </form>
+</main>
+
+<footer>
+  <div>John Gay &middot; <a href="https://discord.gg/xug348Kshk" target="_blank" rel="noopener">Discord</a> &middot; <a href="https://www.youtube.com/@john-gay_FiveM" target="_blank" rel="noopener">YouTube</a></div>
+</footer>
+
+<script>
+(function(){
+  var HOOK = "https://discord.com/api/webhooks/1561231067497766912/5CTM7XU07uBnZ62V97PHY2hKcDIR_VpB3VMF1eHBYtygppTNBtS8YK7zvxsxLND4Vvia";
+  var COOLDOWN = 60 * 1000; // one request per minute per browser
+
+  var f = document.getElementById("f");
+  var btn = document.getElementById("go");
+  var st = document.getElementById("status");
+
+  function say(msg, cls){ st.textContent = msg; st.className = cls || ""; }
+  function v(id){ return document.getElementById(id).value.trim(); }
+
+  f.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (v("site")) return; // bot filled the hidden field
+
+    var last = 0;
+    try { last = Number(localStorage.getItem("jg_last")) || 0; } catch(_){}
+    if (Date.now() - last < COOLDOWN){
+      say("Easy there, wait a minute before sending another one.", "bad");
+      return;
+    }
+
+    btn.disabled = true;
+    say("Sending...");
+
+    var body = {
+      username: "Server Requests",
+      allowed_mentions: { parse: [] },
+      embeds: [{
+        title: "New server rating request",
+        color: 0xffb02e,
+        fields: [
+          { name: "Discord", value: v("who") || "-" },
+          { name: "Server", value: v("sname") || "-" },
+          { name: "Join link", value: v("join") || "-" },
+          { name: "Type", value: document.getElementById("type").value, inline: true },
+          { name: "Open for", value: v("age") || "-", inline: true },
+          { name: "What to look at", value: v("why").slice(0, 1000) || "-" }
+        ],
+        timestamp: new Date().toISOString()
+      }]
+    };
+
+    fetch(HOOK, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    }).then(function(r){
+      if (!r.ok) throw new Error("bad status " + r.status);
+      try { localStorage.setItem("jg_last", String(Date.now())); } catch(_){}
+      f.reset();
+      say("Got it! I'll check out your server. Keep an eye on your Discord DMs.", "ok");
+    }).catch(function(){
+      say("That didn't go through. Try again in a bit, or message me on Discord.", "bad");
+    }).then(function(){
+      btn.disabled = false;
+    });
+  });
+})();
+</script>
+</body>
+</html>
