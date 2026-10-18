@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>John Gay | FiveM</title>
+<meta name="description" content="John Gay's YouTube channel. FiveM videos, playlists, and server ratings.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16140f;
+    --card:#1f1c15;
+    --ink:#f3ecdc;
+    --dim:#a89f8a;
+    --accent:#ffb02e;
+    --red:#e5483b;
+    --line:#3a352a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Bricolage Grotesque',system-ui,sans-serif;
+    line-height:1.5;
+  }
+  a{color:inherit}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 20px}
+
+  /* top bar */
+  .top{border-bottom:2px solid var(--line)}
+  .top .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px}
+  .logo{font-weight:800;font-size:22px;text-decoration:none;letter-spacing:-.5px}
+  .logo span{color:var(--accent)}
+  .top nav a{margin-left:20px;text-decoration:none;color:var(--dim);font-size:15px}
+  .top nav a:hover{color:var(--ink)}
+
+  /* hero */
+  .hero{padding:56px 0 40px}
+  .hero .wrap{display:flex;gap:36px;align-items:center;flex-wrap:wrap}
+  .pfp{
+    width:150px;height:150px;border-radius:50%;
+    border:4px solid var(--accent);
+    object-fit:cover;background:var(--card);
+    box-shadow:6px 6px 0 var(--red);
+    flex-shrink:0;
+  }
+  .hero h1{font-size:clamp(40px,8vw,72px);line-height:1;font-weight:800;letter-spacing:-2px}
+  .hero .note{
+    font-family:'Caveat',cursive;font-size:26px;color:var(--accent);
+    transform:rotate(-2deg);display:inline-block;margin-top:6px;
+  }
+  .stats{margin-top:18px;display:flex;gap:26px;flex-wrap:wrap;color:var(--dim);font-size:15px}
+  .stats b{display:block;font-size:28px;color:var(--ink);font-weight:800}
+  .btns{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    display:inline-block;padding:12px 20px;font-weight:600;font-size:16px;
+    text-decoration:none;border:2px solid var(--ink);border-radius:6px;
+    box-shadow:4px 4px 0 var(--ink);transition:transform .08s, box-shadow .08s;
+  }
+  .btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+  .btn.yt{background:var(--red);border-color:#000;box-shadow:4px 4px 0 #000;color:#fff}
+  .btn.yt:hover{box-shadow:2px 2px 0 #000}
+  .btn.dc{background:#5865f2;border-color:#000;box-shadow:4px 4px 0 #000;color:#fff}
+  .btn.dc:hover{box-shadow:2px 2px 0 #000}
+
+  /* sections */
+  section{padding:36px 0}
+  h2{font-size:30px;font-weight:800;letter-spacing:-1px;margin-bottom:20px}
+  h2 small{font-family:'Caveat',cursive;font-size:22px;color:var(--dim);font-weight:600;margin-left:8px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
+  .vid{
+    background:var(--card);border:2px solid var(--line);border-radius:8px;
+    text-decoration:none;overflow:hidden;display:block;
+    transition:transform .12s, border-color .12s;
+  }
+  .vid:nth-child(odd){transform:rotate(-.6deg)}
+  .vid:nth-child(even){transform:rotate(.5deg)}
+  .vid:hover{transform:rotate(0) translateY(-3px);border-color:var(--accent)}
+  .vid img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
+  .vid div{padding:12px 14px}
+  .vid h3{font-size:15px;font-weight:600;line-height:1.3}
+  .vid p{font-size:13px;color:var(--dim);margin-top:4px}
+
+  .pl{display:flex;gap:14px;align-items:center}
+  .pl img{width:110px;aspect-ratio:16/9;object-fit:cover;border-radius:4px;background:#000;flex-shrink:0}
+  .pl div{padding:0}
+  .plcard{
+    background:var(--card);border:2px solid var(--line);border-radius:8px;
+    padding:12px;text-decoration:none;display:block;
+  }
+  .plcard:hover{border-color:var(--accent)}
+  .plgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .plcard h3{font-size:16px;font-weight:600}
+  .plcard p{font-size:13px;color:var(--dim)}
+
+  .msg{color:var(--dim);padding:10px 0;font-size:15px}
+
+  /* rate CTA */
+  .rate{
+    margin:30px 0 50px;
+    background:var(--accent);color:#1a1405;
+    border:3px solid #000;border-radius:10px;
+    padding:34px 28px;text-align:center;
+    box-shadow:8px 8px 0 #000;
+    transform:rotate(-.7deg);
+  }
+  .rate h2{margin:0 0 8px;font-size:clamp(24px,5vw,38px);color:#1a1405}
+  .rate p{margin-bottom:18px;font-size:16px}
+  .rate a{
+    display:inline-block;background:#1a1405;color:var(--accent);
+    padding:12px 26px;border-radius:6px;font-weight:800;font-size:18px;text-decoration:none;
+  }
+  .rate a:hover{background:#000}
+
+  footer{border-top:2px solid var(--line);padding:26px 0;color:var(--dim);font-size:14px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="./">john<span>gay</span></a>
+    <nav>
+      <a href="#videos">videos</a>
+      <a href="#playlists">playlists</a>
+      <a href="request">rate my server</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <img class="pfp" id="pfp" alt="" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+      <div>
+        <h1 id="chname">John Gay</h1>
+        <span class="note">FiveM stuff, mostly</span>
+        <div class="stats">
+          <div><b id="subs">...</b>subscribers</div>
+          <div><b id="vids">...</b>videos</div>
+          <div><b id="views">...</b>total views</div>
+        </div>
+        <div class="btns">
+          <a class="btn yt" href="https://www.youtube.com/@john-gay_FiveM" target="_blank" rel="noopener">Watch on YouTube</a>
+          <a class="btn dc" href="https://discord.gg/xug348Kshk" target="_blank" rel="noopener">Join the Discord</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <section id="videos">
+      <h2>Latest videos <small>fresh off the upload button</small></h2>
+      <div class="grid" id="videoGrid"><p class="msg">Loading videos...</p></div>
+    </section>
+
+    <section id="playlists">
+      <h2>Playlists <small>binge responsibly</small></h2>
+      <div class="plgrid" id="plGrid"><p class="msg">Loading playlists...</p></div>
+    </section>
+
+    <div class="rate">
+      <h2>want me to rate your fiveM server? Click Me!</h2>
+      <p>Send it over and I'll take a look. No promises it'll be a good score.</p>
+      <a href="request">Click Me!</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; <span id="yr"></span> John Gay</span>
+    <span>
+      <a href="https://www.youtube.com/@john-gay_FiveM" target="_blank" rel="noopener">YouTube</a> &middot;
+      <a href="https://discord.gg/xug348Kshk" target="_blank" rel="noopener">Discord</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var KEY = "AIzaSyAMfUMvhpni7KftbIJhEou8eWcwlgY6l1M";
+  var HANDLE = "john-gay_FiveM";
+  var API = "https://www.googleapis.com/youtube/v3/";
+  var channelId = null;
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  function $(id){ return document.getElementById(id); }
+  function api(path, params){
+    params.key = KEY;
+    var q = Object.keys(params).map(function(k){
+      return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
+    }).join("&");
+    return fetch(API + path + "?" + q).then(function(r){
+      if(!r.ok) throw new Error("API " + r.status);
+      return r.json();
+    });
+  }
+  function nice(n){
+    n = Number(n);
+    if(n >= 1e6) return (n/1e6).toFixed(2).replace(/\.?0+$/,"") + "M";
+    if(n >= 1e4) return (n/1e3).toFixed(1).replace(/\.0$/,"") + "K";
+    return n.toLocaleString();
+  }
+  function ago(iso){
+    var s = (Date.now() - new Date(iso).getTime())/1000;
+    var u = [["year",31536000],["month",2592000],["week",604800],["day",86400],["hour",3600],["minute",60]];
+    for(var i=0;i<u.length;i++){
+      var v = Math.floor(s/u[i][1]);
+      if(v >= 1) return v + " " + u[i][0] + (v>1?"s":"") + " ago";
+    }
+    return "just now";
+  }
+
+  function loadStats(){
+    var p = channelId ? {part:"statistics", id:channelId}
+                      : {part:"snippet,statistics,contentDetails", forHandle:HANDLE};
+    return api("channels", p).then(function(d){
+      var c = d.items && d.items[0];
+      if(!c) throw new Error("no channel");
+      if(!channelId){
+        channelId = c.id;
+        $("chname").textContent = c.snippet.title;
+        var t = c.snippet.thumbnails;
+        $("pfp").src = (t.high || t.medium || t.default).url;
+        $("pfp").alt = c.snippet.title;
+      }
+      var s = c.statistics;
+      $("subs").textContent = s.hiddenSubscriberCount ? "hidden" : nice(s.subscriberCount);
+      $("vids").textContent = nice(s.videoCount);
+      $("views").textContent = nice(s.viewCount);
+      return c;
+    });
+  }
+
+  function loadVideos(c){
+    var uploads = c.contentDetails.relatedPlaylists.uploads;
+    return api("playlistItems", {part:"snippet", playlistId:uploads, maxResults:8}).then(function(d){
+      var box = $("videoGrid");
+      box.innerHTML = "";
+      if(!d.items || !d.items.length){ box.innerHTML = '<p class="msg">No videos yet.</p>'; return; }
+      d.items.forEach(function(it){
+        var sn = it.snippet;
+        if(!sn.resourceId) return;
+        var th = sn.thumbnails || {};
+        var img = (th.medium || th.high || th.default || {}).url || "";
+        var a = document.createElement("a");
+        a.className = "vid";
+        a.href = "https://www.youtube.com/watch?v=" + sn.resourceId.videoId;
+        a.target = "_blank"; a.rel = "noopener";
+        var im = document.createElement("img");
+        im.src = img; im.alt = ""; im.loading = "lazy";
+        var inner = document.createElement("div");
+        var h = document.createElement("h3"); h.textContent = sn.title;
+        var p = document.createElement("p"); p.textContent = ago(sn.publishedAt);
+        inner.appendChild(h); inner.appendChild(p);
+        a.appendChild(im); a.appendChild(inner);
+        box.appendChild(a);
+      });
+    });
+  }
+
+  function loadPlaylists(){
+    return api("playlists", {part:"snippet,contentDetails", channelId:channelId, maxResults:12}).then(function(d){
+      var box = $("plGrid");
+      box.innerHTML = "";
+      if(!d.items || !d.items.length){ box.innerHTML = '<p class="msg">No playlists yet.</p>'; return; }
+      d.items.forEach(function(it){
+        var th = it.snippet.thumbnails || {};
+        var img = (th.medium || th.default || {}).url || "";
+        var a = document.createElement("a");
+        a.className = "plcard pl";
+        a.href = "https://www.youtube.com/playlist?list=" + it.id;
+        a.target = "_blank"; a.rel = "noopener";
+        var im = document.createElement("img");
+        im.src = img; im.alt = ""; im.loading = "lazy";
+        var inner = document.createElement("div");
+        var h = document.createElement("h3"); h.textContent = it.snippet.title;
+        var p = document.createElement("p");
+        var n = it.contentDetails.itemCount;
+        p.textContent = n + (n === 1 ? " video" : " videos");
+        inner.appendChild(h); inner.appendChild(p);
+        a.appendChild(im); a.appendChild(inner);
+        box.appendChild(a);
+      });
+    });
+  }
+
+  loadStats().then(function(c){
+    loadVideos(c).catch(function(){
+      $("videoGrid").innerHTML = '<p class="msg">Couldn\'t load videos right now. <a href="https://www.youtube.com/@john-gay_FiveM">Watch on YouTube</a> instead.</p>';
+    });
+    loadPlaylists().catch(function(){
+      $("plGrid").innerHTML = '<p class="msg">Couldn\'t load playlists right now.</p>';
+    });
+    // live-ish sub count, refresh every 30s
+    setInterval(function(){ loadStats().catch(function(){}); }, 30000);
+  }).catch(function(){
+    $("subs").textContent = "?";
+    $("vids").textContent = "?";
+    $("views").textContent = "?";
+    $("videoGrid").innerHTML = '<p class="msg">Couldn\'t reach YouTube. <a href="https://www.youtube.com/@john-gay_FiveM">Watch on YouTube</a> instead.</p>';
+    $("plGrid").innerHTML = "";
+  });
+})();
+</script>
+</body>
+</html>
